@@ -42,6 +42,7 @@ const disconnectOnAppQuit = async () => {
 
 export const connectDBs = async () => {
   try {
+    
     const platformOrcDBConnectionString = `mongodb://${encodeURIComponent(
       process.env.PLATFORM_ORC_DB_USER
     )}:${encodeURIComponent(process.env.PLATFORM_ORC_DB_PWD)}@${process.env.PLATFORM_ORC_DB_HOST}:${
@@ -97,15 +98,15 @@ export const connectDBs = async () => {
 };
 
 export const getPlatformOrcDBConnection = () => {
-  if (!dbConnections.platformDB) {
-    throw new Error("platform DB connection is not established.");
+  if (!dbConnections.platformOrcDB) {
+    throw new Error("platform Orc DB connection is not established.");
   }
-  return dbConnections.platformDB;
+  return dbConnections.platformOrcDB;
 };
 
-export const getDataLeakDBConnection = () => {
-  if (!dbConnections.dataLeakDB) {
-    throw new Error("Data leak DB connection is not established.");
+export const getPlatformIdentityDBConn = () => {
+  if (!dbConnections.platformIdentityDB) {
+    throw new Error("platlform Identity DB connection is not established.");
   }
-  return dbConnections.dataLeakDB;
+  return dbConnections.platformIdentityDB;
 };

@@ -1,5 +1,6 @@
 import { model, Schema } from "mongoose";
 import { activityLabelEnums } from "../helpers/enums/enums.config.js";
+import { getPlatformIdentityDBConn } from "../helpers/connections/mongo.connection.js";
 
 const activityLogSchema = new Schema(
   {
@@ -42,6 +43,8 @@ const activityLogSchema = new Schema(
   { timestamps: true }
 );
 
-const activityLogModel = model("activitylog", activityLogSchema);
+const dbConn = getPlatformIdentityDBConn();
+
+const activityLogModel = dbConn.model("activitylog", activityLogSchema);
 
 export default activityLogModel;

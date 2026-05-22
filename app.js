@@ -7,7 +7,7 @@ import { errorHandler } from "./data/helpers/errors/central_error_handler.js";
 import cookieParser from "cookie-parser";
 
 const app = express();
-const version = "v1";
+const version = "v6";
 
 app.use(cors({ origin: "*" }));
 

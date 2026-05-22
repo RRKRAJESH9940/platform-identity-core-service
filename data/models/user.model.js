@@ -1,5 +1,6 @@
 import { Schema, model } from "mongoose";
 import { userRoles } from "../helpers/enums/enums.config.js";
+import { getPlatformOrcDBConnection } from "../helpers/connections/mongo.connection.js";
 const userSchema = new Schema(
   {
     userName: {
@@ -31,5 +32,9 @@ const userSchema = new Schema(
   { timestamps: true }
 );
 
-const userModel = model("user", userSchema);
+
+const dbConn = getPlatformOrcDBConnection();
+
+const userModel = dbConn.model("user", userSchema);
+
 export default userModel;
