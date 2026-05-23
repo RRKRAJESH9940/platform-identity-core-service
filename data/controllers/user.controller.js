@@ -72,6 +72,7 @@ export const validateClientToken = async (req, res, next) => {
     const finalResponse = {
       error: false,
       data: {
+        isActive: !result.isDeleted,
         clientId: result._id,
       },
     };
