@@ -219,3 +219,23 @@ export const updateUserInfoHandler = async (payload) => {
     throw error;
   }
 };
+
+
+export const extractTokenInfo = (token) => {
+  try {
+    if (!token)
+      return res.status(401).json({
+        error: true,
+        data: {
+          errorMessage: "Access denied. Unauthorised request",
+        },
+      });
+    const splitString = token.split(" ");
+    const decodedToken = jwt.verify(splitString[1], process.env.SECRET_KEY);
+    return decodedToken;
+  } catch (error) {
+    console.log(error);
+    console.error("Error while extracting info from token");
+    throw new CustomError("Invalid token", 401);
+  }
+};

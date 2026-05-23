@@ -3,8 +3,10 @@ import express, { json } from "express";
 import cors from "cors";
 import rotationalLogger from "./data/middlewares/winston.middleware.js";
 import authRouter from "./data/routers/auth.router.js";
+import clientRouter from "./data/routers/client.router.js";
 import { errorHandler } from "./data/helpers/errors/central_error_handler.js";
 import cookieParser from "cookie-parser";
+import userRouter from "./data/routers/user.router.js";
 
 const app = express();
 const version = "v6";
@@ -19,6 +21,9 @@ app.use(cookieParser());
 app.use(rotationalLogger);
 
 app.use(`/api/${version}/auth`, authRouter);
+app.use(`/api/${version}/client`, clientRouter)
+app.use(`/api/${version}/user`, userRouter)
+
 
 app.use(errorHandler);
 
