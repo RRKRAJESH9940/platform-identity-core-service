@@ -4,6 +4,7 @@ import { Types } from "mongoose";
 import userModel from "../models/user.model.js";
 import clientModel from "../models/client.model.js";
 import clientWebhookModel from "../models/client_webhook.model.js";
+import consumerModel from "../models/consumer.model.js";
 
 export const getClientWebhookHandler = async (payload, token) => {
   try {
@@ -80,13 +81,25 @@ export const validateClientTokenHandler = async (payload, token) => {
       throw new CustomError("No client found", 409);
     }
 
-    // Return updated document
-    return await clientModel.findOne({
-      _id: new Types.ObjectId(inputTokenInfo.clientId),
-    });
+    const consumerData = await consumerModel.findOne(
+      { _id: clientData.associatedConsumerId },
+      { consumerName: 1 }
+    );
+
+    if (!consumerData) {
+      throw new CustomError("No consumer found for the given client", 409);
+    }
+
+    return {
+      isActive: !clientData.isDeleted,
+      clientId: clientData._id,
+      clientName: clientData.clientName,
+      consumerId: consumerData._id,
+      consumerName: consumerData.consumerName,
+    };
   } catch (error) {
     console.error(
-      "Error while handling update subscription request :: updateWebhookHanlder()",
+      "Error while validating the client token :: validateClientTokenHandler()",
       error
     );
     throw error;

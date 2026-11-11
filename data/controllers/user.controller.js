@@ -71,10 +71,7 @@ export const validateClientToken = async (req, res, next) => {
     // Construct final response
     const finalResponse = {
       error: false,
-      data: {
-        isActive: !result.isDeleted,
-        clientId: result._id,
-      },
+      data: result,
     };
 
     await updateActivityLogResponse(activitylog._id, finalResponse);
